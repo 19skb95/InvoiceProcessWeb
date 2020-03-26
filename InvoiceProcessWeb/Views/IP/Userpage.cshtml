@@ -1,0 +1,96 @@
+﻿@using InvoiceProcessWeb.Models;
+@{
+    ViewBag.Title = "Userpage";
+    Layout = "~/Views/Shared/_IPLayout.cshtml";
+}
+
+<div class="well-sm firstheader">
+    <h3>User Report</h3>
+</div>
+<div class="jumbotron">
+    <div class="container-fluid">
+        <form action="/IP/Home" method="post">
+            <div class="col-md-12">
+                <div class="row">
+
+                    <div class="col-md-4"><b> Name:</b><input type="text" name="Name" class="form-control" /></div>
+
+                    <div class="col-md-4"><b>GST NO:</b> <input type="text" name="GST" class="form-control" /></div>
+                    <div class="col-md-4">
+                        <b style="font-size: 38px;color:#f5deb338">.</b>
+                        <button type="submit" style="background-color: #0d8c7e;color: white;" class="btn btn-default">
+                            <span><i class="glyphicon glyphicon-search"></i></span>Search
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+
+                </div>
+                <br />
+                <div class="row">
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+<div class="jumbotron">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <table id="example" class="table-bordered table table-striped table-condensed " style="text-align:center">
+                    <thead class="invtblhead">
+                        <tr>
+                            <th>SL No.</th>
+                            <th>Invoice No</th>
+                            <th>Invoice Date</th>
+                            <th>Party</th>
+                            <th>Place OF Supply</th>
+                            <th>GSTIN</th>
+                            <th>Taxable Value</th>
+                            <th>IGST</th>
+                            <th>CGST</th>
+                            <th>SGST</th>
+                            <th>UTGST</th>
+                            <th>CESS</th>
+                            <th>Total Value</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (ViewBag.list != null)
+                        {
+                            int i = 1;
+                            foreach (var item in (List<Tbl_ReportMaster>)ViewBag.list)
+                            {
+                                <tr>
+                                    <td>@Html.Raw(i++)</td>                                   
+                                    <td>@item.InvoiceNo</td>
+                                    <td>@Convert.ToDateTime(item.InvoiceDate).ToString("dd-MMM-yyyy")</td>
+                                    <td>@item.PartyName</td>
+                                    <td>@item.PlaceOfSupply</td>
+                                    <td>@item.GSTNO</td>
+                                    <td>@item.TotalTval</td>
+                                    <td>@item.TotalIgst</td>
+                                    <td>@item.TotalCgst</td>
+                                    <td>@item.TotalSgst</td>
+                                    <td>@item.TotalUtgst</td>
+                                    <td>@item.TotalCess</td>
+                                    <td>@item.TotalAmount</td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>

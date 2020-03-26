@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "RegistrationPage";
+    Layout = "~/Views/Shared/_IPLayout.cshtml";
+}
+
+<div class="well-sm firstheader">
+    <h3>Client Registration Form</h3>
+</div>
+<div class="jumbotron">
+    <div class="container-fluid">
+        <form action="/Home/RegistrationPage" method="post" enctype="multipart/form-data">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4" style="text-align:right;font-weight:bold">NAME:</div>
+                    <div class="col-md-8"><input type="text" required name="Name" class="form-control" /></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4" style="text-align:right;font-weight:bold">PAN:</div>
+                    <div class="col-md-8"><input type="text" required name="PAN" class="form-control" /></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4" style="text-align:right;font-weight:bold">ADHAR:</div>
+                    <div class="col-md-8"><input required type="text" name="Adhar" class="form-control" /></div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4" style="text-align:right;font-weight:bold">GST NO:</div>
+                    <div class="col-md-8">
+                        <input type="text" required class="form-control" name="GST" /><input type="file" name="gstdoc" />
+                        <span style="font-size: 11px;color: #16141770;">upload gstin certificate..</span>
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4" style="text-align:right;font-weight:bold">MOBILE:</div>
+                    <div class="col-md-8"><input type="number" required name="Mob1" class="form-control" /></div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4" style="text-align:right;font-weight:bold">EMAIL:</div>
+                    <div class="col-md-8">
+                        <input type="email" name="Mail1" class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-8">
+
+                        <input type="submit" style="background-color: #05d2bc;color: white;" class="btn btn-default savebtn" value="Submit" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-8">
+                        @if (TempData["msg"] != null)
+                        {
+                            <span style="color:green">@TempData["msg"]</span>
+                        }
+                        @if (TempData["error"] != null)
+                        {
+                            <span style="color:red">@TempData["error"]</span>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

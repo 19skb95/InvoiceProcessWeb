@@ -1,0 +1,229 @@
+﻿@using InvoiceProcessWeb.Models
+@{
+    ViewBag.Title = "Action";
+    Layout = "~/Views/Shared/_IPLayout.cshtml";
+}
+<style>
+    .tbInv th {
+        color: #726228;
+    }
+
+    .sp_text {
+        display: block;
+        width: 100%;
+        height: 32px;
+        padding: 2px 0px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: white;
+        background-color: #d6701f66;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    #tbl1 tr th {
+        text-align: right;
+    }
+
+    .thd {
+        font-size: 11px;
+        background-color: #7a826e;
+        color: white;
+        text-align: center;
+    }
+</style>
+<div class="well-sm firstheader">
+    <h3>Entry Form</h3>
+</div>
+<div class="jumbotron" style="background-color:#85acc69e">
+    <div class="container-fluid">
+        <form action="/IP/Action" method="post" >
+            @if (ViewBag.obj != null)
+            {
+                var obj = (Tbl_ClientMaster)ViewBag.obj;
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <table class="tbInv">
+                                <tr>
+                                    <th>Name:</th>
+                                    <td>@obj.Name  <input type="hidden" name="ClientName" value="@obj.Name"></td>
+                                </tr>
+                                <tr>
+                                    <th>Doc NO:</th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th>GSTIN:</th>
+                                    <td><input type="text" class="sp_text" value="@obj.GST" name="GSTNO" id="gstin" /></td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                        <div class="col-md-3">
+                            <table class="tbInv">
+                                <tr>
+                                    <th>Client Code:</th>
+                                    <td>
+                                        @obj.ClientID<input type="hidden" name="ClientID" value="@obj.ClientID">
+                                        <input type="hidden" name="PanNo" value="@obj.PAN">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Type Of Document:</th>
+                                    <td>
+                                        <select id="doctype" class="form-control sp_text" name="ReportType" required onchange="Doctypechanged(this)">
+                                            <option value="">Select</option>
+                                            <option value="Sale">Sale</option>
+                                            <option value="Purchase">Purchase</option>
+                                            <option value="Debit Note">Debit Note</option>
+                                            <option value="Credit Note">Credit Note</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <br />
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Invoice No:</label>
+                            <input type="text" name="InvoiceNo" class="sp_text" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Invoice Date:</label>
+                            <input type="date" class="sp_text" name="InvoiceDate" />
+
+                        </div>
+                        <div class="col-md-3">
+                            <label>EWay Bill No:</label>
+                            <input type="text" class="sp_text" name="EwayBill" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>EWay Bill Date:</label>
+                            <input type="date" class="sp_text" name="EwayBillDate" />
+                        </div>
+
+
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Party Name:</label>
+                            <input type="text" class="sp_text" name="PartyName" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Party GST:</label>
+                            <input type="text" onchange="partygsttyped(this)" id="partygst" class="sp_text" name="PartyGstNumber" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Mode Of Transport:</label>
+                            <input type="text" class="sp_text" name="ModeOfTransport" />
+                        </div>
+                        <div class="col-md-3">
+                            <label>Vehicle No:</label>
+                            <input type="text" class="sp_text" name="VehicleNo" />
+
+                        </div>
+
+
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Address:</label>
+                            <textarea class="sp_text" name="Address"></textarea>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Place Of Supply:</label>
+                            <input type="text" id="Place" class="sp_text" name="PlaceOfSupply" />
+                        </div>
+                    </div>
+                    <br />
+                    <hr />
+                    <div class="row">
+                        <input type="hidden" id="htotal" />
+                        <table class="table">
+                            <thead class="thd">
+                                <tr>
+                                    <td> <input id="itemname" type="text" class="sp_text"  /></td>
+                                    <td><input id="hsn" type="text" class="sp_text" /></td>
+                                    <td><input id="uom" type="text" class="sp_text"  /></td>
+                                    <td><input id="qty" type="number" onkeyup="QTYEntered(this)" class="sp_text"/></td>
+                                    <td><input id="rpu" type="number" onkeyup="RatePerUnit(this)" class="sp_text"  /></td>
+                                    <td> <input id="tvalue" type="number" class="sp_text"  /></td>
+                                    <td><input id="rate" type="number" onkeyup="RateEntered(this)" class="sp_text"  /></td>
+                                    <td><input id="igst" type="text" class="sp_text" /></td>
+                                    <td><input id="sgst" type="number" class="sp_text" /></td>
+                                    <td><input id="cgst" type="number" class="sp_text" /></td>
+                                    <td><input id="utgst" type="number" class="sp_text"  /></td>
+                                    <td><input id="cess" type="number" class="sp_text" onkeyup="CessEntered(this)"  /></td>
+                                    <td><input id="total" type="number" class="sp_text"  /></td>
+                                    <th width="6px"><a class="btn btn-sm btn-default" style="background-color:#d29249;color:white" onclick="addRow('itemDt')"><b><i class="glyphicon glyphicon-plus"></i></b></a></th>
+                                </tr>
+                                <tr style="text-align:center">
+                                    <th>ItemName</th>
+                                    <th>HSN/SAC</th>
+                                    <th>UOM</th>
+                                    <th>QTY.</th>
+                                    <th>Rate PU</th>
+                                    <th>T. Value</th>
+                                    <th>GST Rate</th>
+                                    <th>IGST</th>
+                                    <th>SGST</th>
+                                    <th>CGST</th>
+                                    <th>UTGST</th>
+                                    <th>CESS</th>
+                                    <th>TOTAL</th>
+                                    <th></th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="itemDt"></tbody>
+                            <tfoot>
+                                <tr>
+
+                                    <td></td>
+                                    <td></td>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th><input type="text" class="sp_text" name="TotalTval" value="0.00" id="taxVAlTotal" placeholder="T.Value" /></th>
+                                    <th></th>
+                                    <th><input type="text" class="sp_text" name="TotalIgst" value="0.00" id="tigst" placeholder="IGST" /></th>
+                                    <th><input type="text" class="sp_text" value="0.00" name="TotalSgst" id="tsgst" placeholder="SGST" /></th>
+                                    <th><input type="text" class="sp_text" value="0.00" name="TotalCgst" id="tcgst" placeholder="CGST" /></th>
+                                    <th><input type="text" class="sp_text" value="0.00" name="TotalUtgst" id="tutgst" placeholder="UTGST" /></th>
+                                    <th><input type="text" class="sp_text" id="tcess" name="TotalCess" value="0.00" placeholder="CESS" /></th>
+                                    <th><input type="text" id="Gtotal" name="TotalAmount" style="width:72px" value="0.00" class="sp_text" placeholder="Total" /></th>
+                                    <td></td>
+                                </tr>
+
+                            </tfoot>
+
+                        </table>
+                    </div>
+                </div>
+                <input type="submit" value="Submit" class="btn btn btn-default" style="background-color: #e8f1eda8;color:#c27979;font-family: inherit;font-weight: bold;font-size: 16px;" />
+                <a class="btn btn-danger" href="/IP/Home"style="position: relative;left: 88%;font-family: inherit;font-weight: bold;font-size: 16px;" >Back</a>
+
+            }
+
+
+        </form>
+
+
+    </div>
+</div>
+
+<script src="~/ActionpageJS.js"></script>
+<script>
+  
+</script>

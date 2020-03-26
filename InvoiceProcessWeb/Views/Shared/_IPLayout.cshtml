@@ -1,0 +1,125 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+
+    <style>
+        .navg {
+            background: rgb(0,241,255);
+            background: linear-gradient(90deg, rgba(0,241,255,0.15730042016806722) 0%, rgba(2,0,36,1) 11%, rgba(184,189,147,0.9948354341736695) 81%);
+            /*background: rgb(131,58,180);
+            background: linear-gradient(90deg, rgba(131,58,180,1) 1%, rgba(67,169,226,0.938813025210084) 6%, rgba(29,210,253,0.6839110644257703) 32%, rgba(48,170,238,0.036852240896358524) 82%);*/
+        }
+
+        .invtblhead {
+            background: rgb(0,241,255);
+            background: linear-gradient(90deg, rgba(0,241,255,0.15730042016806722) 0%, rgba(184,189,147,0.9948354341736695) 0%, rgba(0,15,36,1) 13%, rgba(184,189,147,0.9948354341736695) 93%);
+            
+            color: white;
+        }
+
+        .nav-link {
+            color: #5b497d;
+            font-family: fantasy;
+            font-size: 22px;
+        }
+
+        .nav-link {
+            color: #3b738e;
+        }
+
+        .firstheader {
+            background: rgb(0,241,255);
+            background: linear-gradient(90deg, rgba(0,241,255,0.15730042016806722) 0%, rgba(184,189,147,0.9948354341736695) 0%, rgba(0,15,36,1) 13%, rgba(184,189,147,0.9948354341736695) 93%);
+          
+            
+            color: #fbf2e2;
+            font-family: none;
+        }
+    </style>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title ::GPIL</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Scripts/dt/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="row" style="margin-top: -75px;">
+        <div class="col-md-2">
+            @*<img style="position: relative;top: 21px;" src="~/images/bg1.jpg" width="215px;" height="150px;" />*@
+        </div>
+        <div class="col-md-10">
+            <ul>
+            </ul>
+            <b style="color:black;position: relative;top: 42px;left: 1040px">User</b>
+            <ul class="nav navbar-nav navbar-right" style="color:black;margin-top:56px;margin-right:0px;">
+                <li>
+                    <a href='@Url.Action("Logout", "Login")'>
+                        <img src='@Url.Content("~/images/Logout.png")' />&nbsp; Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav flex-column navg">
+                <li class="nav-item">
+                    <a class="nav-link" href="/IP/Home"><i class="glyphicon glyphicon-home"></i>Home</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/Home/RegistrationPage"><i class="glyphicon glyphicon-user"></i>Add User</a>
+                </li>
+
+
+            </ul>
+        </div>
+
+        <div class="col-md-10">
+            @RenderBody()
+
+        </div>
+    </div>
+    <div class="container body-content">
+
+        <hr />
+        <footer>
+            <p><center>&copy; @DateTime.Now.Year - SKB Pvt. Ltd.</center></p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script src="~/Scripts/dt/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        debugger
+        $("#lblmsg").hide(5000)
+        var table = $('#example').DataTable();
+
+        $('#example tbody').on('click', 'tr', function () {
+            var data = table.row(this).data();
+            // alert('You clicked on ' + data[0] + '\'s row');
+        });
+
+        //$(".invoice").datepicker(
+        //    {
+        //        dateFormat: 'dd-M-yy',
+        //        timepicker: false,
+
+        //    }
+        //);
+
+        //$("#lblmsg").hide(2000)
+    });
+</script>

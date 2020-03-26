@@ -1,0 +1,81 @@
+﻿@using InvoiceProcessWeb.Models;
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_IPLayout.cshtml";
+}
+
+<div class="well-sm firstheader">
+    <h3>List Of Client</h3>
+</div>
+<div class="jumbotron">
+    <div class="container-fluid">
+        <form action="/IP/Home" method="post">
+            <div class="col-md-12">
+                <div class="row">
+
+                    <div class="col-md-4"><b> Name:</b><input type="text" name="Name" class="form-control" /></div>
+
+                    <div class="col-md-4"><b>GST NO:</b> <input type="text" name="GST" class="form-control" /></div>
+                    <div class="col-md-4">
+                        <b style="font-size: 38px;color:#f5deb338">.</b>
+                        <button type="submit" style="background-color: #0d8c7e;color: white;" class="btn btn-default">
+                            <span><i class="glyphicon glyphicon-search"></i></span>Search
+                        </button>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+
+                </div>
+                <br />
+                <div class="row">
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+<div class="jumbotron">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <table id="example" class="table-bordered table table-striped table-condensed " style="text-align:center">
+                    <thead class="invtblhead">
+                        <tr>
+                            <th>REG No.</th>
+                            <th>Name</th>
+                            <th>Date Of Registration</th>
+                            <th>Report</th>
+                            <th>Entry From</th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (ViewBag.list != null)
+                        {
+                            foreach (var item in (List<Tbl_ClientMaster>)ViewBag.list)
+                            {
+                                <tr>
+                                    <td>@item.ClientID</td>
+                                    <td>@item.Name</td>
+                                    <td>@Convert.ToDateTime(item.DOJ).ToString("dd-MMM-yyyy")</td>
+                                    <td>
+                                        <a href="/IP/UserPage?ID=@item.ClientID" class="btn-sm btn-default" style="background-color:#f3700961"><span style="color:#f39f07"><i class="glyphicon glyphicon-eye-open"></i></span></a>
+                                    </td>
+                                    <td>
+                                        <a href="/IP/Action?ID=@item.ClientID"><span style="color:#090a09">..<i class="glyphicon glyphicon-edit"></i></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
